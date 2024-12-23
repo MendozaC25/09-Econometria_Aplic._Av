@@ -1,0 +1,873 @@
+---
+title: "datos_loreto_smartin"
+author: "Gianfranco Romero & Max Chipani"
+date: "2024-12-21"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(rio)
+library(dplyr)
+library(haven)
+```
+
+# Educación
+
+```{r}
+data_2004 <- read_sav("Enaho01a-2004-300.sav")
+```
+
+```{r}
+data_2005 <- read_sav("Enaho01a-2005-300.sav") 
+```
+
+```{r}
+data_2006 <- read_sav("Enaho01a-2006-300.sav") 
+```
+
+```{r}
+data_2007 <- read_sav("Enaho01a-2007-300.sav") 
+```
+
+```{r}
+data_2008 <- read_sav("Enaho01a-2008-300.sav") 
+```
+
+```{r}
+data_2009 <- read_sav("Enaho01a-2009-300.sav") 
+```
+
+```{r}
+data_2010 <- read_sav("Enaho01a-2010-300.sav") 
+```
+
+```{r}
+data_2011 <- read_sav("Enaho01a-2011-300.sav") 
+```
+
+```{r}
+data_2012 <- read_sav("Enaho01a-2012-300.sav") 
+```
+
+```{r}
+data_2013 <- read_sav("Enaho01a-2013-300.sav") 
+```
+
+```{r}
+edu_2004 <- data_2004 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  filter(P208A == 12 | P208A == 13 | P208A == 14) %>%  #Rango de edad 12-14 años
+  select(AÑO,
+         UBIGEO,
+         P208A, #Edad
+         P308A, #Nivel de estudios (3:Secundaria)
+         P306, #¿Está matriculado este año? (1:Si / 2:No)
+         P303) %>% #¿Asistió el año anterior a un centro de educación regular? (1:Si / 2:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín"), #Región
+         desercion = case_when((P303 == 1 & P306 ==2) ~ 1, #Si año pasado asistió pero este año no
+                               TRUE ~ 2)) # (1:Si desertó / 2:No desertó)
+```
+
+```{r}
+edu_2005 <- data_2005 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  filter(P208A == 12 | P208A == 13 | P208A == 14) %>%  #Rango de edad 12-14 años
+  select(AÑO,
+         UBIGEO,
+         P208A, #Edad
+         P308A, #Nivel de estudios (3:Secundaria)
+         P306, #¿Está matriculado este año? (1:Si / 2:No)
+         P303) %>% #¿Asistió el año anterior a un centro de educación regular? (1:Si / 2:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín"), #Región
+         desercion = case_when((P303 == 1 & P306 ==2) ~ 1, #Si año pasado asistió pero este año no
+                               TRUE ~ 2)) # (1:Si desertó / 2:No desertó)
+```
+
+```{r}
+edu_2006 <- data_2006 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  filter(P208A == 12 | P208A == 13 | P208A == 14) %>%  #Rango de edad 12-14 años
+  select(AÑO,
+         UBIGEO,
+         P208A, #Edad
+         P308A, #Nivel de estudios (3:Secundaria)
+         P306, #¿Está matriculado este año? (1:Si / 2:No)
+         P303) %>% #¿Asistió el año anterior a un centro de educación regular? (1:Si / 2:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín"), #Región
+         desercion = case_when((P303 == 1 & P306 ==2) ~ 1, #Si año pasado asistió pero este año no
+                               TRUE ~ 2)) # (1:Si desertó / 2:No desertó)
+```
+
+```{r}
+edu_2007 <- data_2007 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  filter(P208A == 12 | P208A == 13 | P208A == 14) %>%  #Rango de edad 12-14 años
+  select(AÑO,
+         UBIGEO,
+         P208A, #Edad
+         P308A, #Nivel de estudios (3:Secundaria)
+         P306, #¿Está matriculado este año? (1:Si / 2:No)
+         P303) %>% #¿Asistió el año anterior a un centro de educación regular? (1:Si / 2:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín"), #Región
+         desercion = case_when((P303 == 1 & P306 ==2) ~ 1, #Si año pasado asistió pero este año no
+                               TRUE ~ 2)) # (1:Si desertó / 2:No desertó)
+```
+
+```{r}
+edu_2008 <- data_2008 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  filter(P208a == 12 | P208a == 13 | P208a == 14) %>%  #Rango de edad 12-14 años
+  select(AÑO,
+         UBIGEO,
+         P208a, #Edad
+         P308A, #Nivel de estudios (3:Secundaria)
+         P306, #¿Está matriculado este año? (1:Si / 2:No)
+         P303) %>% #¿Asistió el año anterior a un centro de educación regular? (1:Si / 2:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín"), #Región
+         desercion = case_when((P303 == 1 & P306 ==2) ~ 1, #Si año pasado asistió pero este año no
+                               TRUE ~ 2)) # (1:Si desertó / 2:No desertó)
+```
+
+```{r}
+edu_2009 <- data_2009 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  filter(P208A == 12 | P208A == 13 | P208A == 14) %>%  #Rango de edad 12-14 años
+  select(AÑO,
+         UBIGEO,
+         P208A, #Edad
+         P308A, #Nivel de estudios (3:Secundaria)
+         P306, #¿Está matriculado este año? (1:Si / 2:No)
+         P303) %>% #¿Asistió el año anterior a un centro de educación regular? (1:Si / 2:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín"), #Región
+         desercion = case_when((P303 == 1 & P306 ==2) ~ 1, #Si año pasado asistió pero este año no
+                               TRUE ~ 2)) # (1:Si desertó / 2:No desertó)
+```
+
+```{r}
+edu_2010 <- data_2010 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  filter(P208a == 12 | P208a == 13 | P208a == 14) %>%  #Rango de edad 12-14 años
+  select(AÑO,
+         UBIGEO,
+         P208a, #Edad
+         P308A, #Nivel de estudios (3:Secundaria)
+         P306, #¿Está matriculado este año? (1:Si / 2:No)
+         P303) %>% #¿Asistió el año anterior a un centro de educación regular? (1:Si / 2:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín"), #Región
+         desercion = case_when((P303 == 1 & P306 ==2) ~ 1, #Si año pasado asistió pero este año no
+                               TRUE ~ 2)) # (1:Si desertó / 2:No desertó)
+```
+
+```{r}
+edu_2011 <- data_2011 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  filter(P208a == 12 | P208a == 13 | P208a == 14) %>%  #Rango de edad 12-14 años
+  select(AÑO,
+         UBIGEO,
+         P208a, #Edad
+         P308A, #Nivel de estudios (3:Secundaria)
+         P306, #¿Está matriculado este año? (1:Si / 2:No)
+         P303) %>% #¿Asistió el año anterior a un centro de educación regular? (1:Si / 2:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín"), #Región
+         desercion = case_when((P303 == 1 & P306 ==2) ~ 1, #Si año pasado asistió pero este año no
+                               TRUE ~ 2)) # (1:Si desertó / 2:No desertó)
+```
+
+```{r}
+edu_2012 <- data_2012 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  filter(P208A == 12 | P208A == 13 | P208A == 14) %>%  #Rango de edad 12-14 años
+  select(AÑO,
+         UBIGEO,
+         P208A, #Edad
+         P308A, #Nivel de estudios (3:Secundaria)
+         P306, #¿Está matriculado este año? (1:Si / 2:No)
+         P303) %>% #¿Asistió el año anterior a un centro de educación regular? (1:Si / 2:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín"), #Región
+         desercion = case_when((P303 == 1 & P306 ==2) ~ 1, #Si año pasado asistió pero este año no
+                               TRUE ~ 2)) # (1:Si desertó / 2:No desertó)
+```
+
+```{r}
+edu_2013 <- data_2013 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  filter(P208A == 12 | P208A == 13 | P208A == 14) %>%  #Rango de edad 12-14 años
+  select(AÑO,
+         UBIGEO,
+         P208A, #Edad
+         P308A, #Nivel de estudios (3:Secundaria)
+         P306, #¿Está matriculado este año? (1:Si / 2:No)
+         P303) %>% #¿Asistió el año anterior a un centro de educación regular? (1:Si / 2:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín"), #Región
+         desercion = case_when((P303 == 1 & P306 ==2) ~ 1, #Si año pasado asistió pero este año no
+                               TRUE ~ 2)) # (1:Si desertó / 2:No desertó)
+```
+
+
+OJO: La variable de deserción solo mide si el menor estudió el año pasado, pero abandonó los estudios este año. Si un menor no estudió el año pasado y tampoco este año, no se considera que desertó.
+
+
+# Salud
+
+```{r}
+data_salud_2004 <- read_sav("Enaho01a-2004-400.sav") 
+```
+
+```{r}
+data_salud_2005 <- read_sav("Enaho01a-2005-400.sav") 
+```
+
+```{r}
+data_salud_2006 <- read_sav("Enaho01a-2006-400.sav") 
+```
+
+```{r}
+data_salud_2007 <- read_sav("Enaho01a-2007-400.sav") 
+```
+
+```{r}
+data_salud_2008 <- read_sav("Enaho01a-2008-400.sav") 
+```
+
+```{r}
+data_salud_2009 <- read_sav("Enaho01a-2009-400.sav") 
+```
+
+```{r}
+data_salud_2010 <- read_sav("Enaho01a-2010-400.sav") 
+```
+
+```{r}
+data_salud_2011 <- read_sav("Enaho01a-2011-400.sav") 
+```
+
+```{r}
+data_salud_2012 <- read_sav("Enaho01a-2012-400.sav") 
+```
+
+```{r}
+data_salud_2013 <- read_sav("Enaho01a-2013-400.sav") 
+```
+
+```{r}
+salud_2004 <- data_salud_2004 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P407A, #El establecimiento de salud donde se atendió se encuentra (1:Muy cerca, 2:Cerca,
+                #3:Lejos, 4:Muy lejos)
+         P407B, #Tiempo de espera para tenderse en centro de salud (1:Muy poco, 2:Poco, 3:Bastante,
+                #4:Demasiado)
+         P407E, #¿Se solucionó el problema de salud? (1:Si, totalmente, 2:Si, parcialmente,
+                #3:No, no tuve dinero para medicamento, 4:No, no seguí indicaciones del médico,
+                #5:No, tratamiento no adecuado, 6:Aún no concluye tratamiento, 7:Otro)
+         P4091, #No acudió porque no tuvo dinero (1=Si, 0=No)
+         P4092, #''' se encuentra lejos (1=Si, 0=No)
+         P4097) %>% #''' no tiene seguro (1=Si, 0=No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+```{r}
+salud_2005 <- data_salud_2005 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P407A, #El establecimiento de salud donde se atendió se encuentra (1:Muy cerca, 2:Cerca,
+                #3:Lejos, 4:Muy lejos)
+         P407B, #Tiempo de espera para tenderse en centro de salud (1:Muy poco, 2:Poco, 3:Bastante,
+                #4:Demasiado)
+         P407E, #¿Se solucionó el problema de salud? (1:Si, totalmente, 2:Si, parcialmente,
+                #3:No, no tuve dinero para medicamento, 4:No, no seguí indicaciones del médico,
+                #5:No, tratamiento no adecuado, 6:Aún no concluye tratamiento, 7:Otro)
+         P4091, #No acudió porque no tuvo dinero (1=Si, 0=No)
+         P4092, #''' se encuentra lejos (1=Si, 0=No)
+         P4097) %>% #''' no tiene seguro (1=Si, 0=No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+```{r}
+salud_2006 <- data_salud_2006 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P407A, #El establecimiento de salud donde se atendió se encuentra (1:Muy cerca, 2:Cerca,
+                #3:Lejos, 4:Muy lejos)
+         P407B, #Tiempo de espera para tenderse en centro de salud (1:Muy poco, 2:Poco, 3:Bastante,
+                #4:Demasiado)
+         P407E, #¿Se solucionó el problema de salud? (1:Si, totalmente, 2:Si, parcialmente,
+                #3:No, no tuve dinero para medicamento, 4:No, no seguí indicaciones del médico,
+                #5:No, tratamiento no adecuado, 6:Aún no concluye tratamiento, 7:Otro)
+         P4091, #No acudió porque no tuvo dinero (1=Si, 0=No)
+         P4092, #''' se encuentra lejos (1=Si, 0=No)
+         P4097) %>% #''' no tiene seguro (1=Si, 0=No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+```{r}
+salud_2007 <- data_salud_2007 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P407A, #El establecimiento de salud donde se atendió se encuentra (1:Muy cerca, 2:Cerca,
+                #3:Lejos, 4:Muy lejos)
+         P407B, #Tiempo de espera para tenderse en centro de salud (1:Muy poco, 2:Poco, 3:Bastante,
+                #4:Demasiado)
+         P407E, #¿Se solucionó el problema de salud? (1:Si, totalmente, 2:Si, parcialmente,
+                #3:No, no tuve dinero para medicamento, 4:No, no seguí indicaciones del médico,
+                #5:No, tratamiento no adecuado, 6:Aún no concluye tratamiento, 7:Otro)
+         P4091, #No acudió porque no tuvo dinero (1=Si, 0=No)
+         P4092, #''' se encuentra lejos (1=Si, 0=No)
+         P4097) %>% #''' no tiene seguro (1=Si, 0=No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+
+```{r}
+salud_2008 <- data_salud_2008 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P407A, #El establecimiento de salud donde se atendió se encuentra (1:Muy cerca, 2:Cerca,
+                #3:Lejos, 4:Muy lejos)
+         P407B, #Tiempo de espera para tenderse en centro de salud (1:Muy poco, 2:Poco, 3:Bastante,
+                #4:Demasiado)
+         P407E, #¿Se solucionó el problema de salud? (1:Si, totalmente, 2:Si, parcialmente,
+                #3:No, no tuve dinero para medicamento, 4:No, no seguí indicaciones del médico,
+                #5:No, tratamiento no adecuado, 6:Aún no concluye tratamiento, 7:Otro)
+         P4091, #No acudió porque no tuvo dinero (1=Si, 0=No)
+         P4092, #''' se encuentra lejos (1=Si, 0=No)
+         P4097) %>% #''' no tiene seguro (1=Si, 0=No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+```{r}
+salud_2009 <- data_salud_2009 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P407A, #El establecimiento de salud donde se atendió se encuentra (1:Muy cerca, 2:Cerca,
+                #3:Lejos, 4:Muy lejos)
+         P407B, #Tiempo de espera para tenderse en centro de salud (1:Muy poco, 2:Poco, 3:Bastante,
+                #4:Demasiado)
+         P407E, #¿Se solucionó el problema de salud? (1:Si, totalmente, 2:Si, parcialmente,
+                #3:No, no tuve dinero para medicamento, 4:No, no seguí indicaciones del médico,
+                #5:No, tratamiento no adecuado, 6:Aún no concluye tratamiento, 7:Otro)
+         P4091, #No acudió porque no tuvo dinero (1=Si, 0=No)
+         P4092, #''' se encuentra lejos (1=Si, 0=No)
+         P4097) %>% #''' no tiene seguro (1=Si, 0=No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+```{r}
+salud_2010 <- data_salud_2010 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P407A, #El establecimiento de salud donde se atendió se encuentra (1:Muy cerca, 2:Cerca,
+                #3:Lejos, 4:Muy lejos)
+         P407B, #Tiempo de espera para tenderse en centro de salud (1:Muy poco, 2:Poco, 3:Bastante,
+                #4:Demasiado)
+         P407E, #¿Se solucionó el problema de salud? (1:Si, totalmente, 2:Si, parcialmente,
+                #3:No, no tuve dinero para medicamento, 4:No, no seguí indicaciones del médico,
+                #5:No, tratamiento no adecuado, 6:Aún no concluye tratamiento, 7:Otro)
+         P4091, #No acudió porque no tuvo dinero (1=Si, 0=No)
+         P4092, #''' se encuentra lejos (1=Si, 0=No)
+         P4097) %>% #''' no tiene seguro (1=Si, 0=No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+```{r}
+salud_2011 <- data_salud_2011 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P407A, #El establecimiento de salud donde se atendió se encuentra (1:Muy cerca, 2:Cerca,
+                #3:Lejos, 4:Muy lejos)
+         P407B, #Tiempo de espera para tenderse en centro de salud (1:Muy poco, 2:Poco, 3:Bastante,
+                #4:Demasiado)
+         P407E, #¿Se solucionó el problema de salud? (1:Si, totalmente, 2:Si, parcialmente,
+                #3:No, no tuve dinero para medicamento, 4:No, no seguí indicaciones del médico,
+                #5:No, tratamiento no adecuado, 6:Aún no concluye tratamiento, 7:Otro)
+         P4091, #No acudió porque no tuvo dinero (1=Si, 0=No)
+         P4092, #''' se encuentra lejos (1=Si, 0=No)
+         P4097) %>% #''' no tiene seguro (1=Si, 0=No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+```{r}
+salud_2012 <- data_salud_2012 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P4091, #No acudió porque no tuvo dinero (1=Si, 0=No)
+         P4092, #''' se encuentra lejos (1=Si, 0=No)
+         P4097) %>% #''' no tiene seguro (1=Si, 0=No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+```{r}
+salud_2013 <- data_salud_2013 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P4091, #No acudió porque no tuvo dinero (1=Si, 0=No)
+         P4092, #''' se encuentra lejos (1=Si, 0=No)
+         P4097) %>% #''' no tiene seguro (1=Si, 0=No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+
+# Vivienda
+
+```{r}
+vivienda_raw_2004 <- read_sav("Enaho01-2004-100.sav") 
+```
+
+```{r}
+vivienda_raw_2005 <- read_sav("Enaho01-2005-100.sav") 
+```
+
+```{r}
+vivienda_raw_2006 <- read_sav("Enaho01-2006-100.sav") 
+```
+
+```{r}
+vivienda_raw_2007 <- read_sav("Enaho01-2007-100.sav") 
+```
+
+```{r}
+vivienda_raw_2008 <- read_sav("Enaho01-2008-100.sav") 
+```
+
+```{r}
+vivienda_raw_2009 <- read_sav("Enaho01-2009-100.sav") 
+```
+
+```{r}
+vivienda_raw_2010 <- read_sav("Enaho01-2010-100.sav") 
+```
+
+```{r}
+vivienda_raw_2011 <- read_sav("Enaho01-2011-100.sav") 
+```
+
+```{r}
+vivienda_raw_2012 <- read_sav("Enaho01-2012-100.sav") 
+```
+
+```{r}
+vivienda_raw_2013 <- read_sav("Enaho01-2013-100.sav") 
+```
+
+```{r}
+vivienda_2004 <- vivienda_raw_2004 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P110, #El abastecimiento de agua en su hogar procede de (1:Red pública dentro de vivienda,
+              #2:Red pública, fuera de vivienda pero dentro de edificio, 3:Pilón de uso público,
+              #4:Camión cisterna, 5:Pozo, 6:Río o similar, 7:Otra)
+         NBI1, #Vivienda inadecuada (1:Si, 0:No)
+         NBI2, #Vivienda con hacinamiento (1:Si, 0:No)
+         NBI3) %>% #Vivienda sin servicios higiénicos (1:Si, 0:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+```{r}
+vivienda_2005 <- vivienda_raw_2005 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P110, #El abastecimiento de agua en su hogar procede de (1:Red pública dentro de vivienda,
+              #2:Red pública, fuera de vivienda pero dentro de edificio, 3:Pilón de uso público,
+              #4:Camión cisterna, 5:Pozo, 6:Río o similar, 7:Otra)
+         NBI1, #Vivienda inadecuada (1:Si, 0:No)
+         NBI2, #Vivienda con hacinamiento (1:Si, 0:No)
+         NBI3) %>% #Vivienda sin servicios higiénicos (1:Si, 0:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+```{r}
+vivienda_2006 <- vivienda_raw_2006 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P110, #El abastecimiento de agua en su hogar procede de (1:Red pública dentro de vivienda,
+              #2:Red pública, fuera de vivienda pero dentro de edificio, 3:Pilón de uso público,
+              #4:Camión cisterna, 5:Pozo, 6:Río o similar, 7:Otra)
+         NBI1, #Vivienda inadecuada (1:Si, 0:No)
+         NBI2, #Vivienda con hacinamiento (1:Si, 0:No)
+         NBI3) %>% #Vivienda sin servicios higiénicos (1:Si, 0:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+```{r}
+vivienda_2007 <- vivienda_raw_2007 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P110, #El abastecimiento de agua en su hogar procede de (1:Red pública dentro de vivienda,
+              #2:Red pública, fuera de vivienda pero dentro de edificio, 3:Pilón de uso público,
+              #4:Camión cisterna, 5:Pozo, 6:Río o similar, 7:Otra)
+         NBI1, #Vivienda inadecuada (1:Si, 0:No)
+         NBI2, #Vivienda con hacinamiento (1:Si, 0:No)
+         NBI3) %>% #Vivienda sin servicios higiénicos (1:Si, 0:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+```{r}
+vivienda_2008 <- vivienda_raw_2008 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P110, #El abastecimiento de agua en su hogar procede de (1:Red pública dentro de vivienda,
+              #2:Red pública, fuera de vivienda pero dentro de edificio, 3:Pilón de uso público,
+              #4:Camión cisterna, 5:Pozo, 6:Río o similar, 7:Otra)
+         NBI1, #Vivienda inadecuada (1:Si, 0:No)
+         NBI2, #Vivienda con hacinamiento (1:Si, 0:No)
+         NBI3) %>% #Vivienda sin servicios higiénicos (1:Si, 0:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+```{r}
+vivienda_2009 <- vivienda_raw_2009 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P110, #El abastecimiento de agua en su hogar procede de (1:Red pública dentro de vivienda,
+              #2:Red pública, fuera de vivienda pero dentro de edificio, 3:Pilón de uso público,
+              #4:Camión cisterna, 5:Pozo, 6:Río o similar, 7:Otra)
+         NBI1, #Vivienda inadecuada (1:Si, 0:No)
+         NBI2, #Vivienda con hacinamiento (1:Si, 0:No)
+         NBI3) %>% #Vivienda sin servicios higiénicos (1:Si, 0:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+```{r}
+vivienda_2009 <- vivienda_raw_2009 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P110, #El abastecimiento de agua en su hogar procede de (1:Red pública dentro de vivienda,
+              #2:Red pública, fuera de vivienda pero dentro de edificio, 3:Pilón de uso público,
+              #4:Camión cisterna, 5:Pozo, 6:Río o similar, 7:Otra)
+         NBI1, #Vivienda inadecuada (1:Si, 0:No)
+         NBI2, #Vivienda con hacinamiento (1:Si, 0:No)
+         NBI3) %>% #Vivienda sin servicios higiénicos (1:Si, 0:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+```{r}
+vivienda_2010 <- vivienda_raw_2010 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P110, #El abastecimiento de agua en su hogar procede de (1:Red pública dentro de vivienda,
+              #2:Red pública, fuera de vivienda pero dentro de edificio, 3:Pilón de uso público,
+              #4:Camión cisterna, 5:Pozo, 6:Río o similar, 7:Otra)
+         nbi1, #Vivienda inadecuada (1:Si, 0:No)
+         nbi2, #Vivienda con hacinamiento (1:Si, 0:No)
+         nbi3) %>% #Vivienda sin servicios higiénicos (1:Si, 0:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+```{r}
+vivienda_2011 <- vivienda_raw_2011 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P110, #El abastecimiento de agua en su hogar procede de (1:Red pública dentro de vivienda,
+              #2:Red pública, fuera de vivienda pero dentro de edificio, 3:Pilón de uso público,
+              #4:Camión cisterna, 5:Pozo, 6:Río o similar, 7:Otra)
+         NBI1, #Vivienda inadecuada (1:Si, 0:No)
+         NBI2, #Vivienda con hacinamiento (1:Si, 0:No)
+         NBI3) %>% #Vivienda sin servicios higiénicos (1:Si, 0:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+```{r}
+vivienda_2012 <- vivienda_raw_2012 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P110, #El abastecimiento de agua en su hogar procede de (1:Red pública dentro de vivienda,
+              #2:Red pública, fuera de vivienda pero dentro de edificio, 3:Pilón de uso público,
+              #4:Camión cisterna, 5:Pozo, 6:Río o similar, 7:Otra)
+         NBI1, #Vivienda inadecuada (1:Si, 0:No)
+         NBI2, #Vivienda con hacinamiento (1:Si, 0:No)
+         NBI3) %>% #Vivienda sin servicios higiénicos (1:Si, 0:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+```{r}
+vivienda_2013 <- vivienda_raw_2013 %>% 
+  filter(str_detect(UBIGEO, "^16|^22")) %>% #16**** = Loreto / 22**** = San Martín
+  select(AÑO,
+         UBIGEO,
+         P110, #El abastecimiento de agua en su hogar procede de (1:Red pública dentro de vivienda,
+              #2:Red pública, fuera de vivienda pero dentro de edificio, 3:Pilón de uso público,
+              #4:Camión cisterna, 5:Pozo, 6:Río o similar, 7:Otra)
+         NBI1, #Vivienda inadecuada (1:Si, 0:No)
+         NBI2, #Vivienda con hacinamiento (1:Si, 0:No)
+         NBI3) %>% #Vivienda sin servicios higiénicos (1:Si, 0:No)
+  mutate(region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Matín")) #Región
+```
+
+# Deserción y tendencia
+
+```{r}
+# Cargar y procesar datos para cada año
+edu_list <- list(
+  "2004" = edu_2004,
+  "2005" = edu_2005,
+  "2006" = edu_2006,
+  "2007" = edu_2007,
+  "2008" = edu_2008,
+  "2009" = edu_2009,
+  "2010" = edu_2010,
+  "2011" = edu_2011,
+  "2012" = edu_2012,
+  "2013" = edu_2013
+)
+
+# Procesar y combinar todos los años
+edu_combined <- purrr::imap_dfr(edu_list, function(data, year) {
+  # Estandarizar nombre de la variable P208A/P208a
+  if ("P208a" %in% names(data)) {
+    data <- data %>% rename(P208A = P208a)
+  }
+  
+  # Procesar datos
+  data %>%
+    filter(str_detect(UBIGEO, "^16|^22")) %>% # Filtrar Loreto y San Martín
+    filter(P208A == 12 | P208A == 13 | P208A == 14) %>% # Edad 12-14 años
+    select(
+      UBIGEO,
+      P208A, # Edad
+      P308A, # Nivel de estudios (3:Secundaria)
+      P306, # Matrícula actual (1:Sí / 2:No)
+      P303  # Asistencia previa (1:Sí / 2:No)
+    ) %>%
+    mutate(
+      AÑO = as.numeric(year), # Añadir el año al conjunto de datos
+      region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Martín"),
+      desercion = case_when(
+        (P303 == 1 & P306 == 2) ~ 1, # Desertó
+        TRUE ~ 0                  # No desertó
+      )
+    )
+})
+
+# Calcular tasas de deserción por año y región
+edu_summary <- edu_combined %>%
+  group_by(AÑO, region) %>%
+  summarise(
+    tasa_desercion = mean(desercion, na.rm = TRUE)
+  )
+
+# Visualizar la tendencia en deserción por región
+library(ggplot2)
+
+tendencias <- ggplot(edu_summary, aes(x = AÑO, y = tasa_desercion, color = region)) +
+  geom_line(size = 1) +
+  labs(
+    title = "Tendencia de deserción escolar (2004-2013)",
+    x = "Año",
+    y = "Tasa de deserción",
+    color = "Región",
+    caption = "Fuente: Elaboración propia. Datos: ENAHO") +
+  geom_vline(xintercept = 2007, linetype = "dashed", color = "red") +
+  theme_minimal()
+
+tendencias
+ggsave("grafico1.png", plot = tendencias, width = 6, height = 4, dpi = 300)
+```
+
+```{r}
+# Crear una lista de dataframes de salud para los años 2004-2013
+salud_list <- list(
+  "2004" = salud_2004,
+  "2005" = salud_2005,
+  "2006" = salud_2006,
+  "2007" = salud_2007,
+  "2008" = salud_2008,
+  "2009" = salud_2009,
+  "2010" = salud_2010,
+  "2011" = salud_2011,
+  "2012" = salud_2012,
+  "2013" = salud_2013
+)
+
+# Procesar y combinar todos los años
+salud_combined <- purrr::imap_dfr(salud_list, function(data, year) {
+  data %>%
+    filter(str_detect(UBIGEO, "^16|^22")) %>% # Filtrar Loreto y San Martín
+    select(
+      UBIGEO,
+      P4091, # No acudió porque no tuvo dinero
+      P4092, # No acudió porque se encuentra lejos
+      P4097  # No acudió porque no tiene seguro
+    ) %>%
+    mutate(
+      AÑO = as.numeric(year), # Añadir el año al conjunto de datos
+      region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Martín")
+    )
+})
+
+# Calcular proporciones por región, año y razón de no acceso
+razones_summary <- salud_combined %>%
+  group_by(AÑO, region) %>%
+  summarise(
+    falta_dinero = mean(P4091, na.rm = TRUE),
+    lejos = mean(P4092, na.rm = TRUE),
+    sin_seguro = mean(P4097, na.rm = TRUE)
+  ) %>%
+  pivot_longer(
+    cols = c(falta_dinero, lejos, sin_seguro),
+    names_to = "razon",
+    values_to = "proporcion"
+  )
+
+# Visualizar las tendencias por razón de no acceso
+library(ggplot2)
+
+salud_graf <- ggplot(razones_summary, aes(x = AÑO, y = proporcion, color = razon, linetype = region)) +
+  geom_line(size = 1) +
+  labs(
+    title = "Razones para no acceder a servicios de salud (2004-2013)",
+    x = "Año",
+    y = "Proporción",
+    color = "Razón",
+    linetype = "Región",
+    caption = "Fuente: Elaboración propia. Datos: ENAHO"
+  ) +
+  scale_color_manual(
+    values = c("falta_dinero" = "red", "lejos" = "blue", "sin_seguro" = "green"),
+    labels = c("Falta de dinero", "Lejanía", "Falta de seguro")
+  ) +
+  geom_vline(xintercept = 2007, linetype = "dashed", color = "red") +
+  theme_minimal()
+
+salud_graf
+ggsave("grafico2.png", plot = salud_graf, width = 6, height = 4, dpi = 300)
+
+```
+
+```{r}
+# Crear una lista de dataframes de vivienda para los años 2004-2013
+vivienda_list <- list(
+  "2004" = vivienda_raw_2004,
+  "2005" = vivienda_raw_2005,
+  "2006" = vivienda_raw_2006,
+  "2007" = vivienda_raw_2007,
+  "2008" = vivienda_raw_2008,
+  "2009" = vivienda_raw_2009,
+  "2010" = vivienda_raw_2010,
+  "2011" = vivienda_raw_2011,
+  "2012" = vivienda_raw_2012,
+  "2013" = vivienda_raw_2013
+)
+
+# Procesar y combinar todos los años con manejo especial para 2010
+vivienda_combined <- purrr::imap_dfr(vivienda_list, function(data, year) {
+  # Renombrar las columnas de vivienda_raw_2010 para que coincidan con los demás años
+  if (year == "2010") {
+    data <- data %>%
+      rename(
+        NBI1 = nbi1,
+        NBI2 = nbi2,
+        NBI3 = nbi3
+      )
+  }
+  
+  data %>%
+    filter(str_detect(UBIGEO, "^16|^22")) %>% # Filtrar Loreto y San Martín
+    select(
+      UBIGEO,
+      P110, # Abastecimiento de agua en el hogar
+      NBI1, # Vivienda inadecuada
+      NBI2, # Vivienda con hacinamiento
+      NBI3  # Vivienda sin servicios higiénicos
+    ) %>%
+    mutate(
+      AÑO = as.numeric(year), # Añadir el año al conjunto de datos
+      region = if_else(str_detect(UBIGEO, "^16"), "Loreto", "San Martín")
+    )
+})
+
+# Calcular proporciones por región, año y servicio
+vivienda_summary <- vivienda_combined %>%
+  group_by(AÑO, region) %>%
+  summarise(
+    abastecimiento_agua = mean(P110 == 1, na.rm = TRUE), # Proporción de viviendas con agua de red pública dentro de la vivienda
+    vivienda_inadecuada = mean(NBI1 == 1, na.rm = TRUE), # Proporción de viviendas inadecuadas
+    vivienda_hacinada = mean(NBI2 == 1, na.rm = TRUE),   # Proporción de viviendas con hacinamiento
+    sin_servicios_higienicos = mean(NBI3 == 1, na.rm = TRUE) # Proporción de viviendas sin servicios higiénicos
+  ) %>%
+  pivot_longer(
+    cols = c(abastecimiento_agua, vivienda_inadecuada, vivienda_hacinada, sin_servicios_higienicos),
+    names_to = "indicador",
+    values_to = "proporcion"
+  )
+
+# Visualizar las tendencias por indicador de vivienda
+library(ggplot2)
+
+vivienda_graf <- ggplot(vivienda_summary, aes(x = AÑO, y = proporcion, color = indicador, linetype = region)) +
+  geom_line(size = 1) +
+  labs(
+    title = "Tendencia de condiciones de vivienda (2004-2013)",
+    x = "Año",
+    y = "Proporción de viviendas con la condición",
+    color = "Indicador",
+    linetype = "Región",
+    caption = "Fuente: Elaboración propia. Datos: ENAHO"
+  ) +
+  scale_color_manual(
+    values = c("abastecimiento_agua" = "blue", "vivienda_inadecuada" = "red", "vivienda_hacinada" = "orange", "sin_servicios_higienicos" = "green"),
+    labels = c("Agua de red pública", "Vivienda inadecuada", "Vivienda hacinada", "Sin servicios higiénicos")
+  ) +
+  geom_vline(xintercept = 2007, linetype = "dashed", color = "red") +
+  theme_minimal()
+
+vivienda_graf
+ggsave("grafico3.png", plot = vivienda_graf, width = 6, height = 4, dpi = 300)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
